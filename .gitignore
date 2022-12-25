@@ -1,0 +1,13 @@
+# Ape stuff
+.build/
+.cache/
+
+# Python
+.env
+.venv
+.pytest_cache
+__pycache__
+
+
+# My Additions
+python-env
