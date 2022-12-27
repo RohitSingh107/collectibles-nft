@@ -1,7 +1,7 @@
 pragma solidity 0.8.9;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol";
+import "@chainlink/VRFConsumerBase.sol";
 
 contract Collectible is ERC721, VRFConsumerBase {
     uint256 public tokenCounter;
