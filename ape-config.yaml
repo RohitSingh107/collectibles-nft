@@ -15,17 +15,17 @@ default_ecosystem: ethereum
 dependencies:
   - name: OpenZeppelin
     github: OpenZeppelin/openzeppelin-contracts
-  
+    version: 4.8.0
+
   - name: chainlink
     github: smartcontractkit/chainlink-brownie-contracts
     version: 0.5.1
-    exclude: ["abi/v0.4/Ownable.json"]
-    contracts_folder: contracts/src/0.5
+    contracts_folder: contracts/src/v0.8
 
 plugins:
   - name: solidity
 
 solidity:
   import_remapping:
-    - "@openzeppelin=OpenZeppelin"
-    - "@chainlink=chainlink/0.5.1"
+    - "@openzeppelin/contracts=OpenZeppelin/v4.8.0"
+    - "@chainlink=chainlink/v0.5.1"
