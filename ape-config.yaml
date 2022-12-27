@@ -1,1 +1,31 @@
 name: collectibles-nft
+contracts_folder: contracts
+deployments:
+  ethereum:
+    goerli:
+      - contract_type: AggregatorV3Interface
+        address: "0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e"
+      - contract_type: VRFCoordinatorV2
+        address: "0x2Ca8E0C643bDe4C2E08ab1fA0da3401AdAD7734D"
+      - contract_type: LinkToken
+        address: "0x326C977E6efc84E512bB9C30f76E30c160eD06FB"
+
+default_ecosystem: ethereum
+
+dependencies:
+  - name: OpenZeppelin
+    github: OpenZeppelin/openzeppelin-contracts
+  
+  - name: chainlink
+    github: smartcontractkit/chainlink-brownie-contracts
+    version: 0.5.1
+    exclude: ["abi/v0.4/Ownable.json"]
+    contracts_folder: contracts/src/0.5
+
+plugins:
+  - name: solidity
+
+solidity:
+  import_remapping:
+    - "@openzeppelin=OpenZeppelin"
+    - "@chainlink=chainlink/0.5.1"
