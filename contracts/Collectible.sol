@@ -1,9 +1,9 @@
 pragma solidity 0.8.9;
 
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@chainlink/VRFConsumerBase.sol";
 
-contract Collectible is ERC721, VRFConsumerBase {
+contract Collectible is ERC721URIStorage, VRFConsumerBase {
     uint256 public tokenCounter;
     enum Breed {
         PUG,
