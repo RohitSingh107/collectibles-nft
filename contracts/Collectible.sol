@@ -1,9 +1,10 @@
 pragma solidity 0.8.9;
 
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@chainlink/VRFConsumerBase.sol";
 
-contract Collectible is ERC721URIStorage, VRFConsumerBase {
+contract Collectible is ERC721, ERC721URIStorage, VRFConsumerBase {
     uint256 public tokenCounter;
     enum Breed {
         PUG,
@@ -46,6 +47,32 @@ contract Collectible is ERC721URIStorage, VRFConsumerBase {
         emit RequestedCollectible(requestId);
     }
 
+    function setTokenURI(uint256 tokenId, string memory _tokenURI) public {
+        require(
+            _isApprovedOrOwner(_msgSender(), tokenId),
+            "ERC721: transfer caller is not owner nor approved"
+        );
+        _setTokenURI(tokenId, _tokenURI);
+    }
+
+    // The following functions are overrides required by Solidity.
+
+    function _burn(uint256 tokenId)
+        internal
+        override(ERC721, ERC721URIStorage)
+    {
+        super._burn(tokenId);
+    }
+
+    function tokenURI(uint256 tokenId)
+        public
+        view
+        override(ERC721, ERC721URIStorage)
+        returns (string memory)
+    {
+        return super.tokenURI(tokenId);
+    }
+
     function fulfillRandomness(bytes32 requestId, uint256 randomNumber)
         internal
         override
@@ -60,13 +87,5 @@ contract Collectible is ERC721URIStorage, VRFConsumerBase {
         requestIdToTokenId[requestId] = newItemId;
         tokenCounter = tokenCounter + 1;
         emit ReturnedCollectible(requestId, randomNumber);
-    }
-
-    function setTokenURI(uint256 tokenId, string memory _tokenURI) public {
-        require(
-            _isApprovedOrOwner(_msgSender(), tokenId),
-            "ERC721: transfer caller is not owner nor approved"
-        );
-        _setTokenURI(tokenId, _tokenURI);
     }
 }
